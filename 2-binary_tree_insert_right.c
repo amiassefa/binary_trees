@@ -2,24 +2,27 @@
 
 /**
  * binary_tree_insert_right - Inserts a node as the right-child of another node
- * @parent: Pointer to the parent node of the node to create
- * @value:Value to put in the new node
- *
- * Return: Pointer to the created node, or NULL on failure or if parent is
- * NULL.
+ * @parent: The pointer to the node to insert the right-child in.
+ * @value: The value to store in the new node.
+ * Return: A pointer to the created node, or NULL.
  */
 binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
 {
-	binary_tree_t *new = NULL;
+	binary_tree_t *new;
 
-	if (parent == NULL)
+	if (!parent)
 		return (NULL);
-	new = binary_tree_node(parent, value);
-	if (new == NULL)
+	new = malloc(sizeof(*new));
+	if (!new)
 		return (NULL);
+
+	new->parent = parent;
+	new->n = value;
 	new->right = parent->right;
-	parent->right = new;
-	if (new->right)
+	if (new->right != NULL)
 		new->right->parent = new;
+	new->left = NULL;
+	parent->right = new;
+
 	return (new);
 }
